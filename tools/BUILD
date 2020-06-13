@@ -1,0 +1,35 @@
+cc_binary(
+    name='output_ppm',
+    srcs=[
+        'output_ppm.cc',
+    ],
+    copts=[
+        "-std=c++17",
+        "-Ofast",
+        "-Wall",
+    ],
+    deps=[
+        '//:hiho',
+    ],
+)
+
+cc_binary(
+    name='demo_scene',
+    srcs=[
+        'demo_scene.cc',
+    ],
+    copts=[
+        "-std=c++17",
+        "-Ofast",
+        "-Wall",
+    ],
+    linkopts=[
+        "-lgtest_main",
+        "-lgtest",
+        "-pthread",
+        "-lboost_system",
+    ],
+    deps=[
+        '//:hiho',
+    ],
+)

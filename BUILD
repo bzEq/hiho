@@ -1,0 +1,11 @@
+cc_library(
+    name='hiho',
+    hdrs=glob(['*.h']),
+    srcs=glob(['*.cc']),
+    copts=[
+        "-std=c++17",
+        "-Ofast",
+        "-Wall",
+    ],
+    visibility=["//visibility:public"],
+)

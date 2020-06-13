@@ -1,0 +1,18 @@
+cc_test(
+    name='hiho_test',
+    srcs=['hiho_test.cc'],
+    copts=[
+        "-std=c++17",
+        "-Ofast",
+        "-Wall",
+    ],
+    linkopts=[
+        "-lgtest_main",
+        "-lgtest",
+        "-pthread",
+        "-lboost_system",
+    ],
+    deps=[
+        '//:hiho',
+    ],
+)
