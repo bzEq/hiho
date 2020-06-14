@@ -32,7 +32,7 @@ struct World : GeometryConcept {
 
   virtual Vec3f EmitEnergy(const Vec3f &point,
                            const Vec3f &direction) const override {
-    return Vec3f{0.1, 0.1, 0.1};
+    return Vec3f{0, 0, 0};
   }
 };
 
