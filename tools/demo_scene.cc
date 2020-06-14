@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
   World scene;
   Glass glass;
   Solid solid(Vec3f{1 / PI, 1 / PI, 1 / PI});
-  scene.AddObject<Sphere>(Vec3f{0, 0, -100}, 100, &solid);
+  scene.AddObject<Sphere>(Vec3f{0, 0, -100}, 100, &glass);
   scene.AddObject<Sphere>(Vec3f{0, 0, 100}, 100, &solid);
   scene.AddObject<Sphere>(Vec3f{200, 0, 0}, 100, &solid);
   Camera cam({1000, 1000, 1000}, {0, 0, 0}, 3);

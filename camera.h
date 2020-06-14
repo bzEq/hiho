@@ -33,7 +33,7 @@ class Camera {
   }
 
 public:
-  static constexpr FloatTy MAX_ENERGY = 300;
+  static constexpr FloatTy MAX_ENERGY = 1.0;
 
   explicit Camera(const Vec3f &position, const Vec3f &lookat,
                   FloatTy focal_length)

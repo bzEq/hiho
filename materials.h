@@ -26,8 +26,10 @@ struct Solid : MaterialConcept {
 
   std::optional<Vec3f> Scatter(const Vec3f &in,
                                const Vec3f &normal) const override {
-    Vec3f n = SampleFromSphere();
-    return normal + n;
+    Vec3f n = SampleFromHemiSphere();
+    if (LessEqual(n.dot(normal), 0))
+      n = -n;
+    return n;
   }
 
   Vec3f GetPDF(const Vec3f &normal, const Vec3f &in,
