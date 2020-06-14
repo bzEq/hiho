@@ -12,7 +12,7 @@ struct Sphere : GeometryConcept {
   explicit Sphere(const Vec3f &center, FloatTy radius)
       : center(center), radius(radius) {}
 
-  std::optional<Intersection> Intersect(const Ray &ray) const {
+  std::optional<Intersection> Intersect(const Ray &ray) const override {
     Vec3f d = ray.origin - center;
     FloatTy a = ray.direction.dot(ray.direction);
     FloatTy b = 2 * d.dot(ray.direction);
@@ -27,25 +27,24 @@ struct Sphere : GeometryConcept {
     return Intersection{t, this};
   }
 
-  std::optional<Ray> Scatter(const Ray &ray, const Vec3f &point) const {
-    // Vec3f normal = GetNaturalNormal(point);
-    // FloatTy cosine = Cosine(ray.direction, normal);
-    // if (LessEqual(cosine, 0)) {
-    //   return Ray(point, Reflect(-ray.direction, normal));
-    // }
+  std::optional<Ray> Scatter(const Vec3f &in,
+                             const Vec3f &point) const override {
+    Vec3f normal = GetNaturalNormal(point);
+    FloatTy cosine = Cosine(in, normal);
+    if (LessEqual(cosine, 0)) {
+      return Ray(point, Reflect(in, normal));
+    }
     return std::nullopt;
   }
 
-  Vec3f EmitEnergy(const Vec3f &point, const Vec3f &direction) const {
-    Vec3f normal = GetNaturalNormal(point);
-    FloatTy cosine = Cosine(direction, normal);
-    if (LessEqual(cosine, 0))
-      return Vec3f{0, 0, 0};
-    return Vec3f{20, 40, 80} * cosine;
+  Vec3f GetNaturalNormal(const Vec3f &point) const {
+    return (point - center).normalized();
   }
 
-  Vec3f GetNaturalNormal(Vec3f point) const {
-    return (point - center).normalized();
+  Vec3f GetPDF(const Vec3f &point, const Vec3f &in,
+               const Vec3f &out) const override {
+    static const FloatTy PI = acos(-1);
+    return Vec3f{1 / PI, 1 / PI, 1 / PI};
   }
 };
 

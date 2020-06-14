@@ -57,7 +57,8 @@ struct GeometryConcept {
     return {};
   }
 
-  virtual std::optional<Ray> Scatter(const Ray &ray, const Vec3f &point) const {
+  virtual std::optional<Ray> Scatter(const Vec3f &in,
+                                     const Vec3f &point) const {
     return {};
   }
 
@@ -65,7 +66,14 @@ struct GeometryConcept {
     return Vec3f{0, 0, 0};
   }
 
+  virtual Vec3f GetPDF(const Vec3f &point, const Vec3f &in,
+                       const Vec3f &out) const {
+    return Vec3f{0, 0, 0};
+  }
+
   virtual ~GeometryConcept() {}
 };
+
+struct MaterialConcept {};
 
 } // namespace hiho

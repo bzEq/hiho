@@ -20,18 +20,19 @@ public:
       auto i = scene_.Intersect(ray);
       if (!i)
         break;
-      // Update energy.
-      energy =
-          energy.array() +
-          f.array() * i->object->EmitEnergy(ray.At(i->distance), -ray.direction)
-                          .array();
-      // TODO: Update pdf.
-      auto s = i->object->Scatter(ray, ray.At(i->distance));
+      Vec3f point = ray.At(i->distance);
+      energy = energy.array() +
+               i->object->EmitEnergy(point, -ray.direction).array() * f.array();
+      auto s = i->object->Scatter(ray.direction, point);
       if (!s)
         break;
+      Vec3f pdf = i->object->GetPDF(point, -s->direction, -ray.direction);
+      f = f.array() * pdf.array();
       ray = *s;
       --bounces;
     }
+    energy = energy.array() +
+             scene_.EmitEnergy(ray.origin, -ray.direction).array() * f.array();
     return energy;
   }
 };
