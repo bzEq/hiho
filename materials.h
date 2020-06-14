@@ -24,7 +24,7 @@ struct Glass : MaterialConcept {
       return std::nullopt;
     }
     Vec3f out = (in - f * n) * (1 / i) - n * std::sqrt(1 - r);
-    return out;
+    return out.normalized();
   }
 
   Vec3f GetPDF(const Vec3f &normal, const Vec3f &in,

@@ -7,20 +7,26 @@
 
 int main(int argc, char *argv[]) {
   using namespace hiho;
-  const size_t width = 800, height = 600;
+  const size_t width = 1600, height = 900;
   RGBPhoto photo(width, height);
   World scene;
-  Glass glass;
+  Mirror mirror;
   Solid solid;
-  scene.AddObject<Sphere>(Vec3f{100, 100, 100}, 10, &solid, Vec3f{0, 0, 0});
-  scene.AddObject<Sphere>(Vec3f{0, 0, -200}, 100, &solid, Vec3f{0, 0, 0});
-  scene.AddObject<Sphere>(Vec3f{-1000, 0, 0}, 800, &glass, Vec3f{0, 0, 0});
-  scene.AddObject<Sphere>(Vec3f{0, 0, -2000}, 1000, &solid,
-                          Vec3f{100, 100, 100});
-  scene.AddObject<Sphere>(Vec3f{2000, 0, 0}, 1000, &solid, Vec3f{20, 40, 80});
-  scene.AddObject<Sphere>(Vec3f{0, 2000, 0}, 1000, &solid, Vec3f{20, 20, 20});
-  Camera cam({1000, 0, 500}, {0, 0, 0}, 1.8);
-  cam.TakePhoto(scene, photo, 1024, 256);
+  Glass glass(1.05);
+  scene.AddObject<Sphere>(Vec3f{0, 0, 50}, 50, &solid, Vec3f{0, 0, 0});
+  scene.AddObject<Sphere>(Vec3f{-200, -200, 120}, 120, &mirror, Vec3f{0, 0, 0});
+  scene.AddObject<Sphere>(Vec3f{-100, 200, 100}, 100, &solid, Vec3f{0, 0, 0});
+  scene.AddObject<Sphere>(Vec3f{0, 100, 50}, 50, &mirror, Vec3f{0, 0, 0});
+  scene.AddObject<Sphere>(Vec3f{100, 100, 40}, 40, &mirror, Vec3f{0, 0, 0});
+  scene.AddObject<Sphere>(Vec3f{100, -100, 80}, 80, &mirror, Vec3f{0, 0, 0});
+  // scene.AddObject<Sphere>(Vec3f{150, 0, 80}, 80, &glass, Vec3f{0, 0, 0});
+  // Light.
+  scene.AddObject<Sphere>(Vec3f{1e7, 0, 0}, 1e7 - 1e5, &solid,
+                          Vec3f{10, 10, 10});
+  // Floor.
+  scene.AddObject<Sphere>(Vec3f{0, 0, -1e4}, 1e4, &solid, Vec3f{0, 0, 0});
+  Camera cam({500, 0, 400}, {0, 0, 100}, 0.3);
+  cam.TakePhoto(scene, photo, 128, 64);
   PPMWriter writer(photo);
   writer.Write(std::cout);
   return 0;
