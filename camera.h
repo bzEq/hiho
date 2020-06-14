@@ -81,7 +81,7 @@ public:
           photo.SetColor(i, j, color);
           std::unique_lock<std::mutex> l(mu);
           done += 1;
-          fprintf(stderr, "%3f%%\r", (FloatTy)done * 100 / total);
+          fprintf(stderr, "%.4f%%\r", (FloatTy)done * 100 / total);
         });
       }
     }

@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[]) {
   using namespace hiho;
-  const size_t width = 1600, height = 900;
+  const size_t width = 3840, height = 2160;
   RGBPhoto photo(width, height);
   World scene;
   Mirror mirror;
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
   // Floor.
   scene.AddObject<Sphere>(Vec3f{0, 0, -1e4}, 1e4, &solid, Vec3f{0, 0, 0});
   Camera cam({500, 0, 400}, {0, 0, 100}, 0.4);
-  cam.TakePhoto(scene, photo, 4096, 16);
+  cam.TakePhoto(scene, photo, 2048, 16);
   PPMWriter writer(photo);
   writer.Write(std::cout);
   return 0;
