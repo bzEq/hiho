@@ -22,12 +22,14 @@ cc_binary(
         "-std=c++17",
         "-Ofast",
         "-Wall",
+        "-flto",
     ],
     linkopts=[
         "-lgtest_main",
         "-lgtest",
         "-pthread",
         "-lboost_system",
+        "-fuse-ld=lld",
     ],
     deps=[
         '//:hiho',

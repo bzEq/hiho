@@ -6,6 +6,10 @@ cc_library(
         "-std=c++17",
         "-Ofast",
         "-Wall",
+        "-flto",
+    ],
+    linkopts=[
+        "-fuse-ld=lld",
     ],
     visibility=["//visibility:public"],
 )
