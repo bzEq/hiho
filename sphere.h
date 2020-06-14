@@ -9,13 +9,14 @@ struct Sphere : GeometryConcept {
   Vec3f center;
   FloatTy radius;
   MaterialConcept *material;
+  Vec3f energy;
 
   explicit Sphere(const Vec3f &center, FloatTy radius,
-                  MaterialConcept *material)
-      : center(center), radius(radius), material(material) {}
+                  MaterialConcept *material, const Vec3f &energy)
+      : center(center), radius(radius), material(material), energy(energy) {}
 
   explicit Sphere(const Vec3f &center, FloatTy radius)
-      : center(center), radius(radius), material(nullptr) {}
+      : center(center), radius(radius), material(nullptr), energy{0, 0, 0} {}
 
   std::optional<Intersection> Intersect(const Ray &ray) const override {
     Vec3f d = ray.origin - center;
@@ -57,7 +58,7 @@ struct Sphere : GeometryConcept {
     FloatTy f = normal.dot(direction);
     if (f < 0)
       return Vec3f{0, 0, 0};
-    return Vec3f{0.2, 0.4, 0.8} * f;
+    return energy;
   }
 };
 
