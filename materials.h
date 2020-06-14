@@ -34,7 +34,6 @@ struct Solid : MaterialConcept {
     if (normal.dot(in) > 0 || normal.dot(out) < 0)
       return Vec3f{0, 0, 0};
     return Vec3f{0.2, 0.4, 0.8} * normal.dot(out) / PI;
-    // return Vec3f{0, 0, 0};
   }
 };
 

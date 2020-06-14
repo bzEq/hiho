@@ -53,11 +53,11 @@ struct Sphere : GeometryConcept {
   }
 
   Vec3f EmitEnergy(const Vec3f &point, const Vec3f &direction) const override {
-    // Vec3f normal = GetNaturalNormal(point);
-    // FloatTy f = normal.dot(direction);
-    // if (f < 0)
-    return Vec3f{0, 0, 0};
-    // return Vec3f{0.2, 0.4, 0.8} * f;
+    Vec3f normal = GetNaturalNormal(point);
+    FloatTy f = normal.dot(direction);
+    if (f < 0)
+      return Vec3f{0, 0, 0};
+    return Vec3f{0.2, 0.4, 0.8} * f;
   }
 };
 
