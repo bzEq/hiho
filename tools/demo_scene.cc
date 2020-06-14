@@ -17,7 +17,8 @@ int main(int argc, char *argv[]) {
   scene.AddObject<Sphere>(Vec3f{-200, -200, 120}, 120, &mirror, Vec3f{0, 0, 0});
   scene.AddObject<Sphere>(Vec3f{-100, 200, 100}, 100, &solid, Vec3f{0, 0, 0});
   scene.AddObject<Sphere>(Vec3f{0, 100, 50}, 50, &mirror, Vec3f{0, 0, 0});
-  scene.AddObject<Sphere>(Vec3f{100, 100, 40}, 40, &mirror, Vec3f{0, 0, 0});
+  scene.AddObject<Sphere>(Vec3f{100, 40, 20}, 20, &solid, Vec3f{0, 0, 0});
+  scene.AddObject<Sphere>(Vec3f{150, 100, 40}, 40, &mirror, Vec3f{0, 0, 0});
   scene.AddObject<Sphere>(Vec3f{100, -100, 80}, 80, &mirror, Vec3f{0, 0, 0});
   // scene.AddObject<Sphere>(Vec3f{150, 0, 80}, 80, &glass, Vec3f{0, 0, 0});
   // Light.
@@ -25,8 +26,8 @@ int main(int argc, char *argv[]) {
                           Vec3f{10, 10, 10});
   // Floor.
   scene.AddObject<Sphere>(Vec3f{0, 0, -1e4}, 1e4, &solid, Vec3f{0, 0, 0});
-  Camera cam({500, 0, 400}, {0, 0, 100}, 0.3);
-  cam.TakePhoto(scene, photo, 128, 64);
+  Camera cam({500, 0, 400}, {0, 0, 100}, 0.4);
+  cam.TakePhoto(scene, photo, 256, 64);
   PPMWriter writer(photo);
   writer.Write(std::cout);
   return 0;
