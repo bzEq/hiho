@@ -27,7 +27,7 @@ class Camera {
     } else if (IsEqual(localz[1], 0)) {
       localx_ = Vec3f{0, 1, 0};
     } else {
-      localx_ = Vec3f{1, -localz[0] / localz[1], 0}.normalized();
+      localx_ = Vec3f{-1, localz[0] / localz[1], 0}.normalized();
     }
     localy_ = localz.cross(localx_).normalized();
   }

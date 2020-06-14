@@ -11,7 +11,8 @@ int main(int argc, char *argv[]) {
   World scene;
   scene.AddObject<Sphere>(Vec3f{0, 0, -100}, 100);
   scene.AddObject<Sphere>(Vec3f{0, 0, 100}, 100);
-  Camera cam({500, 0, 0}, {0, 0, 0}, 0.5);
+  scene.AddObject<Sphere>(Vec3f{200, 0, 0}, 100);
+  Camera cam({1000, 1000, 1000}, {0, 0, 0}, 3);
   cam.TakePhoto(scene, photo, 32, 32);
   PPMWriter writer(photo);
   writer.Write(std::cout);
