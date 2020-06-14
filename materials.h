@@ -4,35 +4,6 @@
 
 namespace hiho {
 
-struct Glass : MaterialConcept {
-  const FloatTy index;
-
-  explicit Glass(FloatTy index) : index(index) {}
-
-  std::optional<Vec3f> Scatter(const Vec3f &in,
-                               const Vec3f &normal) const override {
-    Vec3f n(normal);
-    FloatTy i = index;
-    FloatTy f = n.dot(in);
-    if (f > 0) {
-      i = 1 / i;
-      n = -n;
-      f = -f;
-    }
-    FloatTy r = (1 - f * f) / (i * i);
-    if (r > 1) {
-      return std::nullopt;
-    }
-    Vec3f out = (in - f * n) * (1 / i) - n * std::sqrt(1 - r);
-    return out.normalized();
-  }
-
-  Vec3f GetPDF(const Vec3f &normal, const Vec3f &in,
-               const Vec3f &out) const override {
-    return Vec3f{1, 1, 1};
-  }
-};
-
 struct Mirror : MaterialConcept {
   std::optional<Vec3f> Scatter(const Vec3f &in,
                                const Vec3f &normal) const override {
