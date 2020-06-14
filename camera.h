@@ -57,7 +57,7 @@ public:
       FloatTy b = 1.0f * y / width - (0.5f * height / width);
       return EmitRay(a, b);
     };
-    auto Filter = [](FloatTy x) { return std::exp(-(x * x)); };
+    auto Filter = [](FloatTy x) { return std::exp(-(x * x) / 2); };
     boost::asio::thread_pool pool(std::thread::hardware_concurrency());
     // boost::asio::thread_pool pool(1U);
     RayTracer tracer(scene);
