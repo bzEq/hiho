@@ -81,8 +81,7 @@ public:
             Ray ray = CreateRayFor(x, y);
             energy += tracer.Trace(ray, ray_bounces);
           }
-          energy = energy.array() /
-                   Vec3f{num_samples, num_samples, num_samples}.array();
+          energy /= (FloatTy)num_samples;
           assert(energy[0] >= 0 && energy[1] >= 0 && energy[2] >= 0);
           RGBColor color = EnergyToColor(energy);
           photo.SetColor(i, j, color);
