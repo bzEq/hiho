@@ -20,8 +20,7 @@ inline bool SolveQuadratic(FloatTy a, FloatTy b, FloatTy c, FloatTy &x0,
 }
 
 inline Vec3f Reflect(Vec3f in, Vec3f normal) {
-  assert(normal.dot(in) > 0 || IsEqual(normal.dot(in), 0));
-  return 2 * (normal.dot(in)) * normal - in;
+  return in - 2 * (normal.dot(in)) * normal;
 }
 
 inline FloatTy Cosine(Vec3f a, Vec3f b) {
