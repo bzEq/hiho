@@ -4,6 +4,7 @@ cc_library(
     srcs=glob(['*.cc']),
     copts=[
         "-std=c++17",
+        "-march=native",
         "-Ofast",
         "-Wall",
         "-flto",

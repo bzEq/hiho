@@ -5,6 +5,7 @@ cc_binary(
     ],
     copts=[
         "-std=c++17",
+        "-march=native",
         "-Ofast",
         "-Wall",
     ],
@@ -20,6 +21,7 @@ cc_binary(
     ],
     copts=[
         "-std=c++17",
+        "-march=native",
         "-Ofast",
         "-Wall",
         "-flto",
