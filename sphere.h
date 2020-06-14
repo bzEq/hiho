@@ -8,9 +8,14 @@ namespace hiho {
 struct Sphere : GeometryConcept {
   Vec3f center;
   FloatTy radius;
+  MaterialConcept *material;
+
+  explicit Sphere(const Vec3f &center, FloatTy radius,
+                  MaterialConcept *material)
+      : center(center), radius(radius), material(material) {}
 
   explicit Sphere(const Vec3f &center, FloatTy radius)
-      : center(center), radius(radius) {}
+      : center(center), radius(radius), material(nullptr) {}
 
   std::optional<Intersection> Intersect(const Ray &ray) const override {
     Vec3f d = ray.origin - center;
@@ -30,11 +35,10 @@ struct Sphere : GeometryConcept {
   std::optional<Ray> Scatter(const Vec3f &in,
                              const Vec3f &point) const override {
     Vec3f normal = GetNaturalNormal(point);
-    FloatTy cosine = Cosine(in, normal);
-    if (LessEqual(cosine, 0)) {
-      return Ray(point, Reflect(in, normal));
-    }
-    return std::nullopt;
+    auto s = material->Scatter(in, normal);
+    if (!s)
+      return std::nullopt;
+    return Ray(point, *s);
   }
 
   Vec3f GetNaturalNormal(const Vec3f &point) const {
@@ -43,8 +47,8 @@ struct Sphere : GeometryConcept {
 
   Vec3f GetPDF(const Vec3f &point, const Vec3f &in,
                const Vec3f &out) const override {
-    static const FloatTy PI = acos(-1);
-    return Vec3f{1 / PI, 1 / PI, 1 / PI};
+    Vec3f normal = GetNaturalNormal(point);
+    return material->GetPDF(normal, in, out);
   }
 };
 

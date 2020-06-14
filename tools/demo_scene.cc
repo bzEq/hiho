@@ -1,4 +1,5 @@
 #include "camera.h"
+#include "materials.h"
 #include "sphere.h"
 #include "world.h"
 
@@ -9,9 +10,10 @@ int main(int argc, char *argv[]) {
   const size_t width = 800, height = 600;
   RGBPhoto photo(width, height);
   World scene;
-  scene.AddObject<Sphere>(Vec3f{0, 0, -100}, 100);
-  scene.AddObject<Sphere>(Vec3f{0, 0, 100}, 100);
-  scene.AddObject<Sphere>(Vec3f{200, 0, 0}, 100);
+  Glass glass;
+  scene.AddObject<Sphere>(Vec3f{0, 0, -100}, 100, &glass);
+  scene.AddObject<Sphere>(Vec3f{0, 0, 100}, 100, &glass);
+  scene.AddObject<Sphere>(Vec3f{200, 0, 0}, 100, &glass);
   Camera cam({1000, 1000, 1000}, {0, 0, 0}, 3);
   cam.TakePhoto(scene, photo, 32, 32);
   PPMWriter writer(photo);

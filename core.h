@@ -17,6 +17,7 @@ using Vec3i = Eigen::Matrix<IntTy, 3, 1>;
 using Mat3f = Eigen::Matrix<FloatTy, 3, 3>;
 using RGBColor = Vec3f;
 constexpr FloatTy EPSILON = 1e-6;
+const FloatTy PI = acos(-1);
 
 class Random {
 public:
@@ -74,6 +75,12 @@ struct GeometryConcept {
   virtual ~GeometryConcept() {}
 };
 
-struct MaterialConcept {};
+struct MaterialConcept {
+  virtual std::optional<Vec3f> Scatter(const Vec3f &in,
+                                       const Vec3f &normal) const = 0;
+
+  virtual Vec3f GetPDF(const Vec3f &normal, const Vec3f &in,
+                       const Vec3f &out) const = 0;
+};
 
 } // namespace hiho
