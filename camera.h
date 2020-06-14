@@ -57,6 +57,7 @@ public:
       FloatTy b = 1.0f * y / width - (0.5f * height / width);
       return EmitRay(a, b);
     };
+    auto Filter = [](FloatTy x) { return std::exp(-(x * x)); };
     boost::asio::thread_pool pool(std::thread::hardware_concurrency());
     // boost::asio::thread_pool pool(1U);
     RayTracer tracer(scene);
@@ -71,7 +72,9 @@ public:
             FloatTy x = (FloatTy)i + rnd.Next() - 0.5f;
             FloatTy y = (FloatTy)j + rnd.Next() - 0.5f;
             Ray ray = CreateRayFor(x, y);
-            energy += tracer.Trace(ray, ray_bounces) / (FloatTy)num_samples;
+            FloatTy r = std::sqrt((x - i) * (x - i) + (y - j) * (y - j));
+            energy += Filter(r) * tracer.Trace(ray, ray_bounces) /
+                      (FloatTy)num_samples;
           }
           assert(energy[0] >= 0 && energy[1] >= 0 && energy[2] >= 0);
           RGBColor color = EnergyToColor(energy);
