@@ -53,22 +53,22 @@ struct Intersection {
   const GeometryConcept *object;
 };
 
+struct Scattery {
+  Ray scattered;
+  Vec3f pdf;
+};
+
 struct GeometryConcept {
   virtual std::optional<Intersection> Intersect(const Ray &) const {
     return std::nullopt;
   }
 
-  virtual std::optional<Ray> Scatter(const Vec3f &in,
-                                     const Vec3f &point) const {
-    return std::nullopt;
+  virtual std::vector<Scattery> Scatter(const Vec3f &in,
+                                        const Vec3f &point) const {
+    return {};
   }
 
   virtual Vec3f EmitEnergy(const Vec3f &point, const Vec3f &direction) const {
-    return Vec3f{0, 0, 0};
-  }
-
-  virtual Vec3f GetPDF(const Vec3f &point, const Vec3f &in,
-                       const Vec3f &out) const {
     return Vec3f{0, 0, 0};
   }
 
@@ -76,11 +76,10 @@ struct GeometryConcept {
 };
 
 struct MaterialConcept {
-  virtual std::optional<Vec3f> Scatter(const Vec3f &in,
-                                       const Vec3f &normal) const = 0;
-
-  virtual Vec3f GetPDF(const Vec3f &normal, const Vec3f &in,
-                       const Vec3f &out) const = 0;
+  virtual std::vector<Scattery> Scatter(const Vec3f &point, const Vec3f &in,
+                                        const Vec3f &normal) const {
+    return {};
+  }
 };
 
 } // namespace hiho

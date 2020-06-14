@@ -13,27 +13,31 @@ class RayTracer {
 public:
   explicit RayTracer(const World &scene) : scene_(scene) {}
 
-  Vec3f Trace(Ray ray, size_t bounces) {
+  Vec3f Trace(const Ray &ray, size_t bounces) {
     // L = L0 + L1*F0 + L2*F0*F1 + L3*F0*F1*F2 + ...
-    Vec3f energy{0, 0, 0}, f{1, 1, 1};
-    while (bounces) {
-      auto i = scene_.Intersect(ray);
+    Vec3f energy{0, 0, 0};
+    std::vector<Scattery> worklist;
+    worklist.emplace_back(Scattery{ray, {1, 1, 1}});
+    while (bounces && !worklist.empty()) {
+      Scattery s(std::move(worklist.back()));
+      worklist.pop_back();
+      auto i = scene_.Intersect(s.scattered);
       if (!i)
         break;
-      Vec3f point = ray.At(i->distance);
+      Vec3f point = s.scattered.At(i->distance);
       energy = energy.array() +
-               i->object->EmitEnergy(point, -ray.direction).array() * f.array();
-      auto s = i->object->Scatter(ray.direction, point);
-      if (!s)
-        break;
-      Vec3f pdf = i->object->GetPDF(point, -s->direction, -ray.direction);
-      f = f.array() * pdf.array();
-      ray.origin = s->At(0.01);
-      ray.direction = s->direction;
+               i->object->EmitEnergy(point, -s.scattered.direction).array() *
+                   s.pdf.array();
+      auto t = i->object->Scatter(s.scattered.direction, point);
+      if (t.empty())
+        continue;
+      for (auto &e : t) {
+        e.scattered.origin = e.scattered.At(0.01);
+        e.pdf = s.pdf.array() * e.pdf.array();
+      }
+      worklist.insert(worklist.end(), t.begin(), t.end());
       --bounces;
     }
-    energy = energy.array() +
-             scene_.EmitEnergy(ray.origin, -ray.direction).array() * f.array();
     return energy;
   }
 };

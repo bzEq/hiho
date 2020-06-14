@@ -34,23 +34,14 @@ struct Sphere : GeometryConcept {
     return std::nullopt;
   }
 
-  std::optional<Ray> Scatter(const Vec3f &in,
-                             const Vec3f &point) const override {
+  std::vector<Scattery> Scatter(const Vec3f &in,
+                                const Vec3f &point) const override {
     Vec3f normal = GetNaturalNormal(point);
-    auto s = material->Scatter(in, normal);
-    if (!s)
-      return std::nullopt;
-    return Ray(point, *s);
+    return material->Scatter(point, in, normal);
   }
 
   Vec3f GetNaturalNormal(const Vec3f &point) const {
     return (point - center).normalized();
-  }
-
-  Vec3f GetPDF(const Vec3f &point, const Vec3f &in,
-               const Vec3f &out) const override {
-    Vec3f normal = GetNaturalNormal(point);
-    return material->GetPDF(normal, in, out);
   }
 
   Vec3f EmitEnergy(const Vec3f &point, const Vec3f &direction) const override {
