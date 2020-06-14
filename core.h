@@ -16,20 +16,20 @@ using Vec3f = Eigen::Matrix<FloatTy, 3, 1>;
 using Vec3i = Eigen::Matrix<IntTy, 3, 1>;
 using Mat3f = Eigen::Matrix<FloatTy, 3, 3>;
 using RGBColor = Vec3f;
+
 constexpr FloatTy EPSILON = 1e-6;
-const FloatTy PI = acos(-1);
+const FloatTy PI = 4 * std::atan(1);
 
 class Random {
 public:
-  Random() : distribution_(0, 1) {}
-
-  explicit Random(int64_t seed) : generator_(seed), distribution_(0, 1) {}
+  explicit Random() : generator_(device_()), distribution_(0, 1) {}
 
   FloatTy Next() { return distribution_(generator_); }
 
   IntTy NextInt() { return int_distribution_(generator_); }
 
 private:
+  std::random_device device_;
   std::mt19937_64 generator_;
   std::uniform_real_distribution<FloatTy> distribution_;
   std::uniform_int_distribution<IntTy> int_distribution_;

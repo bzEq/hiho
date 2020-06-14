@@ -73,7 +73,7 @@ public:
     for (size_t i = 0; i < width; ++i) {
       for (size_t j = 0; j < height; ++j) {
         boost::asio::post(pool, [&, i, j]() {
-          Random rnd(std::time(nullptr));
+          Random rnd;
           Vec3f energy{0, 0, 0};
           for (size_t k = 0; k < num_samples; ++k) {
             FloatTy x = (FloatTy)i + rnd.Next() - 0.5f;

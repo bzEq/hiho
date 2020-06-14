@@ -1,5 +1,9 @@
 #pragma once
 
+#include "core.h"
+
+#include <ctime>
+
 namespace hiho {
 
 inline bool IsEqual(FloatTy a, FloatTy b) { return std::abs(a - b) < EPSILON; }
@@ -28,5 +32,24 @@ inline FloatTy Cosine(Vec3f a, Vec3f b) {
 }
 
 inline bool LessEqual(FloatTy x, FloatTy y) { return x < y || IsEqual(x, y); }
+
+inline FloatTy UniformSample() {
+  static std::random_device device;
+  static std::mt19937 gen(device());
+  static std::uniform_real_distribution<FloatTy> dis(0, 1);
+  return dis(gen);
+}
+
+inline Vec3f SampleFromHemiSphere() {
+  FloatTy u = 2 * PI * UniformSample();
+  FloatTy v = UniformSample();
+  return Vec3f{std::cos(u) * std::sqrt(v), std::sin(u) * std::sqrt(v),
+               std::sqrt(1 - v)};
+}
+
+inline Vec3f SampleFromSphere() {
+  Vec3f v = SampleFromHemiSphere();
+  return UniformSample() < 0.5 ? v : -v;
+}
 
 } // namespace hiho

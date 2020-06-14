@@ -11,11 +11,12 @@ int main(int argc, char *argv[]) {
   RGBPhoto photo(width, height);
   World scene;
   Glass glass;
-  scene.AddObject<Sphere>(Vec3f{0, 0, -100}, 100, &glass);
-  scene.AddObject<Sphere>(Vec3f{0, 0, 100}, 100, &glass);
-  scene.AddObject<Sphere>(Vec3f{200, 0, 0}, 100, &glass);
+  Solid solid(Vec3f{1 / PI, 1 / PI, 1 / PI});
+  scene.AddObject<Sphere>(Vec3f{0, 0, -100}, 100, &solid);
+  scene.AddObject<Sphere>(Vec3f{0, 0, 100}, 100, &solid);
+  scene.AddObject<Sphere>(Vec3f{200, 0, 0}, 100, &solid);
   Camera cam({1000, 1000, 1000}, {0, 0, 0}, 3);
-  cam.TakePhoto(scene, photo, 32, 32);
+  cam.TakePhoto(scene, photo, 96, 8);
   PPMWriter writer(photo);
   writer.Write(std::cout);
   return 0;
