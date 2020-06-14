@@ -55,12 +55,12 @@ struct Intersection {
 
 struct GeometryConcept {
   virtual std::optional<Intersection> Intersect(const Ray &) const {
-    return {};
+    return std::nullopt;
   }
 
   virtual std::optional<Ray> Scatter(const Vec3f &in,
                                      const Vec3f &point) const {
-    return {};
+    return std::nullopt;
   }
 
   virtual Vec3f EmitEnergy(const Vec3f &point, const Vec3f &direction) const {

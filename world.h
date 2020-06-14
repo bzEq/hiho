@@ -8,6 +8,7 @@
 namespace hiho {
 
 struct World : GeometryConcept {
+
   std::vector<std::unique_ptr<GeometryConcept>> objects;
 
   template <typename GeometryTy, typename... Args>
@@ -31,7 +32,7 @@ struct World : GeometryConcept {
 
   virtual Vec3f EmitEnergy(const Vec3f &point,
                            const Vec3f &direction) const override {
-    return Vec3f{0.2, 0.4, 0.8};
+    return Vec3f{5, 5, 5};
   }
 };
 

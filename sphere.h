@@ -26,10 +26,11 @@ struct Sphere : GeometryConcept {
     bool ok = SolveQuadratic(a, b, c, x0, x1);
     if (!ok)
       return std::nullopt;
-    FloatTy t = LessEqual(x0, 0) ? x1 : x0;
-    if (LessEqual(t, 0))
-      return std::nullopt;
-    return Intersection{t, this};
+    FloatTy t = x0 < 0 ? x1 : x0;
+    if (t > 0) {
+      return Intersection{t, this};
+    }
+    return std::nullopt;
   }
 
   std::optional<Ray> Scatter(const Vec3f &in,
@@ -49,6 +50,14 @@ struct Sphere : GeometryConcept {
                const Vec3f &out) const override {
     Vec3f normal = GetNaturalNormal(point);
     return material->GetPDF(normal, in, out);
+  }
+
+  Vec3f EmitEnergy(const Vec3f &point, const Vec3f &direction) const override {
+    // Vec3f normal = GetNaturalNormal(point);
+    // FloatTy f = normal.dot(direction);
+    // if (f < 0)
+    return Vec3f{0, 0, 0};
+    // return Vec3f{0.2, 0.4, 0.8} * f;
   }
 };
 

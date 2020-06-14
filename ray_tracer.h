@@ -28,7 +28,8 @@ public:
         break;
       Vec3f pdf = i->object->GetPDF(point, -s->direction, -ray.direction);
       f = f.array() * pdf.array();
-      ray = *s;
+      ray.origin = s->At(0.01);
+      ray.direction = s->direction;
       --bounces;
     }
     energy = energy.array() +

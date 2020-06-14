@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core.h"
+#include "support.h"
 
 #include <fstream>
 #include <string>
@@ -35,7 +36,7 @@ public:
   explicit PPMWriter(RGBPhoto &photo) : photo_(photo) {}
 
   static uint8_t Normalize(FloatTy x) {
-    assert(x >= 0 && x <= 1);
+    x = Clamp(x);
     return (uint8_t)(255 * x);
   }
 

@@ -6,6 +6,12 @@
 
 namespace hiho {
 
+inline FloatTy Clamp(FloatTy x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+
+inline Vec3f Clamp(const Vec3f &x) {
+  return Vec3f{Clamp(x[0]), Clamp(x[1]), Clamp(x[2])};
+}
+
 inline bool IsEqual(FloatTy a, FloatTy b) { return std::abs(a - b) < EPSILON; }
 
 inline bool IsEqual(Vec3f a, Vec3f b) { return (a - b).norm() < EPSILON; }
@@ -34,9 +40,9 @@ inline FloatTy Cosine(Vec3f a, Vec3f b) {
 inline bool LessEqual(FloatTy x, FloatTy y) { return x < y || IsEqual(x, y); }
 
 inline FloatTy UniformSample() {
-  static std::random_device device;
-  static std::mt19937 gen(device());
-  static std::uniform_real_distribution<FloatTy> dis(0, 1);
+  static thread_local std::random_device device;
+  static thread_local std::mt19937 gen(device());
+  std::uniform_real_distribution<FloatTy> dis(0, 1);
   return dis(gen);
 }
 

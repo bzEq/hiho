@@ -33,8 +33,6 @@ class Camera {
   }
 
 public:
-  static constexpr FloatTy MAX_ENERGY = 1.0;
-
   explicit Camera(const Vec3f &position, const Vec3f &lookat,
                   FloatTy focal_length)
       : position_(position), lookat_(lookat),
@@ -49,13 +47,7 @@ public:
     return Ray(point, direction);
   }
 
-  static RGBColor EnergyToColor(Vec3f energy) {
-    return RGBColor{
-        std::min(energy[0], MAX_ENERGY) / MAX_ENERGY,
-        std::min(energy[1], MAX_ENERGY) / MAX_ENERGY,
-        std::min(energy[2], MAX_ENERGY) / MAX_ENERGY,
-    };
-  }
+  static RGBColor EnergyToColor(Vec3f energy) { return Clamp(energy); }
 
   void TakePhoto(const World &scene, RGBPhoto &photo, size_t num_samples,
                  size_t ray_bounces) const {
@@ -79,9 +71,8 @@ public:
             FloatTy x = (FloatTy)i + rnd.Next() - 0.5f;
             FloatTy y = (FloatTy)j + rnd.Next() - 0.5f;
             Ray ray = CreateRayFor(x, y);
-            energy += tracer.Trace(ray, ray_bounces);
+            energy += tracer.Trace(ray, ray_bounces) / (FloatTy)num_samples;
           }
-          energy /= (FloatTy)num_samples;
           assert(energy[0] >= 0 && energy[1] >= 0 && energy[2] >= 0);
           RGBColor color = EnergyToColor(energy);
           photo.SetColor(i, j, color);
