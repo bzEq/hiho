@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
   scene.AddObject<Sphere>(Vec3f{0, 0, -200}, 100, &solid, Vec3f{0, 0, 0});
   scene.AddObject<Sphere>(Vec3f{0, 0, 100}, 100, &solid, Vec3f{0, 0, 0});
   scene.AddObject<Sphere>(Vec3f{2000, 0, 0}, 1000, &solid, Vec3f{20, 40, 80});
+  scene.AddObject<Sphere>(Vec3f{0, 2000, 0}, 1000, &solid, Vec3f{80, 40, 20});
   Camera cam({1000, 1000, 1000}, {0, 0, 0}, 2);
   cam.TakePhoto(scene, photo, 1024, 16);
   PPMWriter writer(photo);
