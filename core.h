@@ -58,6 +58,7 @@ struct Intersection {
 struct Scattery {
   // scattered := -wi.
   Ray scattered;
+  // Calculated via wi and wo.
   Vec3f pdf;
 };
 
