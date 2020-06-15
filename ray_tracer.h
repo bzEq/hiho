@@ -23,7 +23,7 @@ public:
       worklist.pop_back();
       auto i = scene_.Intersect(s.scattered);
       if (!i)
-        break;
+        continue;
       Vec3f point = s.scattered.At(i->distance);
       energy = energy.array() +
                i->object->EmitEnergy(point, -s.scattered.direction).array() *
