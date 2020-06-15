@@ -2,8 +2,6 @@
 
 #include "core.h"
 
-#include <ctime>
-
 namespace hiho {
 
 inline FloatTy Clamp(FloatTy x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
