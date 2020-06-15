@@ -56,6 +56,7 @@ struct Intersection {
 };
 
 struct Scattery {
+  // scattered := -wi.
   Ray scattered;
   Vec3f pdf;
 };
@@ -65,6 +66,7 @@ struct GeometryConcept {
     return std::nullopt;
   }
 
+  // in := -wo.
   virtual std::vector<Scattery> Scatter(const Vec3f &in,
                                         const Vec3f &point) const {
     return {};
