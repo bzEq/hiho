@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
       Solid(RGBColor{0.1, 0.4, 0.2}), // Green.
   };
   scene.AddObject<Sphere>(Vec3f{0, 0, 50}, 50, &solid[3], Vec3f{0, 0, 0});
-  scene.AddObject<Sphere>(Vec3f{-200, -200, 120}, 120, &mirror, Vec3f{0, 0, 0});
+  scene.AddObject<Sphere>(Vec3f{-200, -200, 150}, 150, &mirror, Vec3f{0, 0, 0});
   scene.AddObject<Sphere>(Vec3f{-100, 200, 100}, 100, &solid[2],
                           Vec3f{0, 0, 0});
   scene.AddObject<Sphere>(Vec3f{0, 100, 50}, 50, &mirror, Vec3f{0, 0, 0});
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
                           Vec3f{10, 10, 10});
   // Floor.
   scene.AddObject<Sphere>(Vec3f{0, 0, -1e4}, 1e4, &solid[0], Vec3f{0, 0, 0});
-  Camera cam({500, 0, 400}, {0, 0, 100}, 0.4);
+  Camera cam({500, 50, 400}, {0, 0, 100}, 0.4);
   cam.TakePhoto(scene, photo, spp, bounces);
   PPMWriter writer(photo);
   writer.Write(std::cout);
