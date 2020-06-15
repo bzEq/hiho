@@ -1,3 +1,5 @@
+// Copyright (c) 2020 Kai Luo <gluokai@gmail.com>. All rights reserved.
+
 #pragma once
 
 #include <eigen3/Eigen/Dense>

@@ -1,3 +1,6 @@
+// Copyright (c) 2020 Kai Luo <gluokai@gmail.com>. All rights reserved.
+// RUN: ./demo_scene > /tmp/demo.ppm
+
 #include "camera.h"
 #include "materials.h"
 #include "sphere.h"
