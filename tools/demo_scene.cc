@@ -10,8 +10,8 @@
 
 int main(int argc, char *argv[]) {
   using namespace hiho;
-  const size_t width = 1600, height = 900;
-  const size_t spp = 512, bounces = 8;
+  const size_t width = 3840, height = 2160;
+  const size_t spp = 4096, bounces = 12;
   RGBPhoto photo(width, height);
   World scene;
   Mirror mirror;
