@@ -29,11 +29,6 @@ struct World : GeometryConcept {
       return i;
     return std::nullopt;
   }
-
-  virtual Vec3f EmitEnergy(const Vec3f &point,
-                           const Vec3f &direction) const override {
-    return Vec3f{0, 0, 0};
-  }
 };
 
 } // namespace hiho
