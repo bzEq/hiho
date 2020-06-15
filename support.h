@@ -29,11 +29,11 @@ inline bool SolveQuadratic(FloatTy a, FloatTy b, FloatTy c, FloatTy &x0,
   return true;
 }
 
-inline Vec3f Reflect(Vec3f in, Vec3f normal) {
+inline Vec3f Reflect(const Vec3f &in, const Vec3f &normal) {
   return in - 2 * (normal.dot(in)) * normal;
 }
 
-inline FloatTy Cosine(Vec3f a, Vec3f b) {
+inline FloatTy Cosine(const Vec3f &a, const Vec3f &b) {
   return a.dot(b) / (a.norm() * b.norm());
 }
 
@@ -56,6 +56,16 @@ inline Vec3f SampleFromHemiSphere() {
 inline Vec3f SampleFromSphere() {
   Vec3f v = SampleFromHemiSphere();
   return UniformSample() < 0.5 ? v : -v;
+}
+
+inline bool Refract(const Vec3f &in, const Vec3f &normal, FloatTy index,
+                    Vec3f &out) {
+  FloatTy f = in.dot(normal);
+  FloatTy discriminant = 1 - index * index * (1 - f * f);
+  if (discriminant < 0)
+    return false;
+  out = index * (in - normal * f) - normal * std::sqrt(discriminant);
+  return true;
 }
 
 } // namespace hiho

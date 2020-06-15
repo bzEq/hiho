@@ -1,8 +1,32 @@
+// Copyright (c) 2020 Kai Luo <gluokai@gmail.com>. All rights reserved.
+
 #pragma once
 
 #include "core.h"
 
 namespace hiho {
+
+struct Glass : MaterialConcept {
+  const FloatTy index;
+
+  explicit Glass(FloatTy index) : index(index) {}
+
+  std::vector<Scattery> Scatter(const Vec3f &point, const Vec3f &in,
+                                const Vec3f &normal) const override {
+    std::vector<Scattery> result;
+    Vec3f n(normal), wo(-in), out, pdf{1, 1, 1};
+    FloatTy f = n.dot(in), i = 1 / index;
+    if (f > 0) {
+      n = -n;
+      i = 1 / i;
+    }
+    if (!Refract(in, n, i, out)) {
+      out = Reflect(in, n);
+    }
+    result.emplace_back(Scattery{Ray(point, out), pdf});
+    return result;
+  }
+};
 
 struct Mirror : MaterialConcept {
   std::vector<Scattery> Scatter(const Vec3f &point, const Vec3f &in,
