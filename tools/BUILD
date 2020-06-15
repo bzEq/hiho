@@ -37,3 +37,27 @@ cc_binary(
         '//:hiho',
     ],
 )
+
+cc_binary(
+    name='random_scene',
+    srcs=[
+        'random_scene.cc',
+    ],
+    copts=[
+        "-std=c++17",
+        "-march=native",
+        "-Ofast",
+        "-Wall",
+        "-flto",
+    ],
+    linkopts=[
+        "-lgtest_main",
+        "-lgtest",
+        "-pthread",
+        "-lboost_system",
+        "-fuse-ld=lld",
+    ],
+    deps=[
+        '//:hiho',
+    ],
+)
