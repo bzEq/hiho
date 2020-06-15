@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
   RGBPhoto photo(width, height);
   World scene;
   Mirror mirror;
-  Solid solid;
+  Solid solid(RGBColor{0.2, 0.4, 0.8});
   scene.AddObject<Sphere>(Vec3f{0, 0, 50}, 50, &solid, Vec3f{0, 0, 0});
   scene.AddObject<Sphere>(Vec3f{-200, -200, 120}, 120, &mirror, Vec3f{0, 0, 0});
   scene.AddObject<Sphere>(Vec3f{-100, 200, 100}, 100, &solid, Vec3f{0, 0, 0});

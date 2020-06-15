@@ -20,6 +20,10 @@ struct Mirror : MaterialConcept {
 };
 
 struct Solid : MaterialConcept {
+  RGBColor color;
+
+  explicit Solid(const RGBColor &color) : color(color) {}
+
   std::vector<Scattery> Scatter(const Vec3f &point, const Vec3f &in,
                                 const Vec3f &normal) const override {
     std::vector<Scattery> result;
@@ -31,7 +35,7 @@ struct Solid : MaterialConcept {
       out = -out;
     s.scattered.origin = point;
     s.scattered.direction = out;
-    s.pdf = Vec3f{0.2, 0.4, 0.8} * normal.dot(-in) / PI;
+    s.pdf = color * normal.dot(-in) / PI;
     result.push_back(std::move(s));
     return result;
   }
