@@ -52,7 +52,7 @@ public:
   static RGBColor EnergyToColor(Vec3f energy) { return Clamp(energy); }
 
   void TakePhoto(const World &scene, RGBPhoto &photo, size_t num_samples,
-                 size_t ray_bounces) const {
+                 size_t ray_bounces, size_t num_threads) const {
     size_t width = photo.width(), height = photo.height();
     auto CreateRayFor = [&](FloatTy x, FloatTy y) {
       FloatTy a = 1.0f * x / width - 0.5;
@@ -60,7 +60,7 @@ public:
       return EmitRay(a, b);
     };
     auto Filter = [](FloatTy x) { return std::exp(-(x * x) / 2); };
-    boost::asio::thread_pool pool(std::thread::hardware_concurrency());
+    boost::asio::thread_pool pool(num_threads);
     // boost::asio::thread_pool pool(1U);
     RayTracer tracer(scene);
     size_t done = 0, total = width * height;

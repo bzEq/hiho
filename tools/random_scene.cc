@@ -60,7 +60,8 @@ int main(int argc, char *argv[]) {
   // Floor.
   scene.AddObject<Sphere>(Vec3f{0, 0, -1e4}, 1e4, &blue, Vec3f{0, 0, 0});
   Camera cam({400, 0, 200}, {0, 0, 0}, 0.4);
-  cam.TakePhoto(scene, photo, spp, bounces);
+  cam.TakePhoto(scene, photo, spp, bounces,
+                std::thread::hardware_concurrency());
   PPMWriter writer(photo);
   writer.Write(std::cout);
   return 0;
