@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
   using namespace hiho;
   const size_t width = 3840, height = 2160;
   const size_t spp = 4096, bounces = 12;
+  const size_t num_threads = std::thread::hardware_concurrency();
   RGBPhoto photo(width, height);
   World scene;
   Mirror mirror;
@@ -39,8 +40,7 @@ int main(int argc, char *argv[]) {
   // Floor.
   scene.AddObject<Sphere>(Vec3f{0, 0, -1e4}, 1e4, &solid[0], Vec3f{0, 0, 0});
   Camera cam({500, 50, 200}, {0, 0, 0}, 0.4);
-  cam.TakePhoto(scene, photo, spp, bounces,
-                std::thread::hardware_concurrency());
+  cam.TakePhoto(scene, photo, spp, bounces, num_threads);
   PPMWriter writer(photo);
   writer.Write(std::cout);
   return 0;
