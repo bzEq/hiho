@@ -27,10 +27,7 @@ cc_binary(
         "-flto",
     ],
     linkopts=[
-        "-lgtest_main",
-        "-lgtest",
         "-pthread",
-        "-lboost_system",
         "-fuse-ld=lld",
     ],
     deps=[
@@ -51,10 +48,7 @@ cc_binary(
         "-flto",
     ],
     linkopts=[
-        "-lgtest_main",
-        "-lgtest",
         "-pthread",
-        "-lboost_system",
         "-fuse-ld=lld",
     ],
     deps=[
