@@ -42,7 +42,7 @@ inline bool LessEqual(FloatTy x, FloatTy y) { return x < y || IsEqual(x, y); }
 inline FloatTy UniformSample() {
   static thread_local std::random_device device;
   static thread_local std::mt19937 gen(device());
-  std::uniform_real_distribution<FloatTy> dis(0, 1);
+  static thread_local std::uniform_real_distribution<FloatTy> dis(0, 1);
   return dis(gen);
 }
 
