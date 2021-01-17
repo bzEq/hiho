@@ -5,6 +5,7 @@ cc_library(
     copts=[
         "-std=c++17",
         "-march=native",
+        "-O3",
         "-Ofast",
         "-Wall",
         "-flto",
